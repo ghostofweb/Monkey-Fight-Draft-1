@@ -5,20 +5,21 @@ function addClass(el,name){
     el.className += ' '+name;
 }
 
-function removeCLass(el,name){
-    el.className = el.className.replace(name,'');
+function removeClass(el, name) {
+    el.className = el.className.replace(` ${name}`, ''); // Ensures correct removal
 }
+
 
 function randomWord() {
     const randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
+    return words[randomIndex]; 
 }
+
 
 
 function formatWord(word) {
     return `<div class="word">
-    <span class='letter'>${word.split("").join("</span><span class='letter'>")}
-    </span>
+    <span class='letter'>${word.split("").join("</span><span class='letter'>")}</span>
     </div>`
 }
 
@@ -32,15 +33,53 @@ function newGame() {
     addClass(document.querySelector(".letter"),'current')
 }
 
-document.getElementById('game').addEventListener('keyup',e=>{
-    const key = e.key;
-    const currentLetter = document.querySelector('.letter.current')
-    const expected = currentLetter.innerHTML;
-    const isLetter = key.length === 1 && key !== " "
+document.getElementById('game').addEventListener('keyup', e => {;
 
-    console.log({key,expected})
-    
-})
+    const key = e.key;
+    const currentWord = document.querySelector(".word.current")
+    const currentLetter = document.querySelector('.letter.current');
+    const expected = currentLetter ? currentLetter.innerHTML : '';
+    const isLetter = key.length === 1 && key !== " ";
+    const isSpace = key === " "
+    const isTab = key === "Tab"; // Check if the Tab key is pressed
+    const isEnter = key === "Enter";
+
+    if (isTab && isEnter) {
+        location.reload(); // Refresh the page
+        return; // Exit the event handler to prevent further processing
+    }
+
+    if (isLetter) {
+        if (currentLetter) {
+            addClass(currentLetter, key === expected ? 'correct' : 'incorrect');
+            removeClass(currentLetter, 'current');
+            addClass(currentLetter.nextSibling,'current')
+        }
+    }
+    console.log({ key, expected });
+
+    if (isSpace) {
+        if(expected !== " "){
+            const letterToInvalidate =  [...currentWord.querySelectorAll('.letter:not(.correct)')]
+            letterToInvalidate.forEach(letter => {
+                addClass(letter, 'incorrect');
+            })
+        }
+        // Move to the next word
+        removeClass(currentWord, 'current'); // Remove current class from the current word
+        const nextWord = currentWord.nextElementSibling; // Get the next word
+        if (nextWord) {
+            addClass(nextWord, "current"); // Add current class to the next word
+            // Set the first letter of the next word as current
+            const firstLetterOfNextWord = nextWord.querySelector('.letter'); 
+            if (firstLetterOfNextWord) {
+                removeClass(firstLetterOfNextWord, 'current'); // Ensure to remove any existing 'current' class
+                addClass(firstLetterOfNextWord, 'current'); // Add current class to the first letter of the next word
+            }
+        }
+    }
+});
+
 
 
 

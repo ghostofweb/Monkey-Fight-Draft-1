@@ -9,7 +9,7 @@
 }
 
 main{
-    width: 1050px;
+    width: 1250px;
     margin: 50px auto
 }
 
@@ -77,7 +77,9 @@ div#game{
 }
 
 
-
+div#game:focus{
+    outline: 0;
+}
 #words{
     filter: blur(5px);
     color: var(--textSecondary);
@@ -96,17 +98,18 @@ div#game{
 
 div.word{
     display: inline-block;
-    margin: 0 12px;
+    margin: 0 8px;
     
 }
 
-#letter.correct{
-    color:#fff;
+.letter.correct {
+    color: #fff;
+}
+.letter.incorrect {
+    color: #f55;
 }
 
-#letter.incorrect{
-    color:#f55
-}
+
 
 #cursor {
     display: none;
@@ -114,9 +117,9 @@ div.word{
     height: 1.3rem;
     background-color: var(--primaryColor);
     position: fixed;
-    top: 248px; /* Adjust as needed */
-    left: 18px; /* Adjust as needed */
-    animation: blink 1s step-end infinite; /* Use step-end for abrupt blinking */
+    top: 248px; 
+    left: 14px;
+    animation: blink 1s step-end infinite; 
 }
 
 @keyframes blink {

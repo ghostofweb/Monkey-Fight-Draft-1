@@ -33,52 +33,57 @@ function newGame() {
     addClass(document.querySelector(".letter"),'current')
 }
 
-document.getElementById('game').addEventListener('keyup', e => {;
-
+document.getElementById('game').addEventListener('keyup', e => {
     const key = e.key;
-    const currentWord = document.querySelector(".word.current")
+    const currentWord = document.querySelector(".word.current");
     const currentLetter = document.querySelector('.letter.current');
     const expected = currentLetter ? currentLetter.innerHTML : '';
     const isLetter = key.length === 1 && key !== " ";
-    const isSpace = key === " "
-    const isTab = key === "Tab"; // Check if the Tab key is pressed
-    const isEnter = key === "Enter";
-
-    if (isTab && isEnter) {
-        location.reload(); // Refresh the page
-        return; // Exit the event handler to prevent further processing
-    }
+    const isSpace = key === " ";
 
     if (isLetter) {
         if (currentLetter) {
             addClass(currentLetter, key === expected ? 'correct' : 'incorrect');
             removeClass(currentLetter, 'current');
-            addClass(currentLetter.nextSibling,'current')
+            if (currentLetter.nextSibling) {
+                // Move to the next letter
+                addClass(currentLetter.nextSibling, 'current');
+            } else {
+                // If no next letter, the word is completed, don't do anything here yet
+                console.log('Word complete, waiting for space...');
+            }
         }
     }
-    console.log({ key, expected });
 
     if (isSpace) {
-        if(expected !== " "){
-            const letterToInvalidate =  [...currentWord.querySelectorAll('.letter:not(.correct)')]
+        if (expected !== " ") {
+            const letterToInvalidate = [...currentWord.querySelectorAll('.letter:not(.correct)')];
             letterToInvalidate.forEach(letter => {
                 addClass(letter, 'incorrect');
-            })
+            });
         }
+
+        // Remove current class from current word
+        removeClass(currentWord, 'current');
+
         // Move to the next word
-        removeClass(currentWord, 'current'); // Remove current class from the current word
-        const nextWord = currentWord.nextElementSibling; // Get the next word
+        const nextWord = currentWord.nextElementSibling;
         if (nextWord) {
-            addClass(nextWord, "current"); // Add current class to the next word
-            // Set the first letter of the next word as current
-            const firstLetterOfNextWord = nextWord.querySelector('.letter'); 
+            addClass(nextWord, "current"); // Mark next word as current
+
+            // Make sure the first letter of the next word is marked as current
+            const firstLetterOfNextWord = nextWord.querySelector('.letter');
             if (firstLetterOfNextWord) {
-                removeClass(firstLetterOfNextWord, 'current'); // Ensure to remove any existing 'current' class
-                addClass(firstLetterOfNextWord, 'current'); // Add current class to the first letter of the next word
+                // Remove 'current' class from any other letter
+                if (currentLetter) {
+                    removeClass(currentLetter, 'current');
+                }
+                addClass(firstLetterOfNextWord, 'current'); // Set the first letter of the next word as current
             }
         }
     }
 });
+
 
 
 

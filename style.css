@@ -1,61 +1,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-:root{
-    --bgColor : #333;
+:root {
+    --bgColor: #333;
     --textPrimary: #fff;
     --textSecondary: #666;
     --primaryColor: #fd4;
-
 }
 
-main{
+main {
     width: 1250px;
-    margin: 50px auto
+    margin: 50px auto;
 }
 
-body{
+body {
     font-family: "Courier Prime", monospace;
     background-color: var(--bgColor);
     color: var(--textPrimary);
     font-size: 1.4rem;
-}   
-h1{
-    color: var(--primaryColor);
-    img{
-        width: 40px;
-        filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(200deg); 
-}
 }
 
-#header{
+h1 {
+    color: var(--primaryColor);
+    img {
+        width: 40px;
+        filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(200deg);
+    }
+}
+
+#header {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin:20px 6px 30px
+    margin: 20px 6px 30px;
 }
 
-#buttons{
-    text-align:right;
+#buttons {
+    text-align: right;
 }
 
-#info{
+#info {
     color: var(--primaryColor);
+    font-size: 2rem; /* Increased font size for better visibility */
 }
-button{
-    background: rgba(255, 255, 255,.2);
+
+button {
+    background: rgba(255, 255, 255, .2);
     color: rgba(255, 255, 255, .5);
     border: 0;
     padding: 5px 20px;
     border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s; /* Transition for hover effect */
 }
 
-div#game{
+button:hover {
+    background-color: rgba(255, 255, 255, 0.4); /* Add hover effect */
+}
+
+div#game {
     line-height: 35px;
     height: 105px;
     overflow: hidden;
-}
-
-#game {
     position: relative; /* To position the focus-error inside it */
     border: none;
 }
@@ -76,50 +80,49 @@ div#game{
     color: var(--bgColor);
 }
 
-
-div#game:focus{
+div#game:focus {
     outline: 0;
 }
-#words{
+
+#words {
     filter: blur(5px);
     color: var(--textSecondary);
     font-family: 'Courier New', Courier, monospace;
     transition: filter 0.3s ease;
 }
 
-#game:focus #words{
-    filter:blur(0);
+#game:focus #words {
+    filter: blur(0);
     transition: filter 0.3s ease;
 }
 
-#game:focus #focus-error{
-    display:none;
+#game:focus #focus-error {
+    display: none;
 }
 
-div.word{
+div.word {
     display: inline-block;
     margin: 0 8px;
-    
 }
 
 .letter.correct {
     color: #fff;
 }
+
 .letter.incorrect {
     color: #f55;
 }
 
-
-
 #cursor {
     display: none;
     width: 2px;
-    height: 1.3rem;
+    height: 1.4rem;
     background-color: var(--primaryColor);
     position: fixed;
-    top: 248px; 
-    left: 14px;
-    animation: blink 1s step-end infinite; 
+    top: 0px;
+    left: 0px;
+    animation: blink 1s step-end infinite;
+    transition: top 0.1s ease-in-out, left 0.1s ease-in-out;
 }
 
 @keyframes blink {
@@ -127,11 +130,10 @@ div.word{
         opacity: 1; /* Fully visible */
     }
     50% {
-        opacity: 0; /* Fully transparent */
+        opacity: 0.5; /* Dim for smoother blink */
     }
 }
 
-#game:focus #cursor{
+#game:focus #cursor {
     display: block;
 }
-

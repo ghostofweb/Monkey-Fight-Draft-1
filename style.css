@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root{
+    --bgColor : #333;
+    --textPrimary: #fff;
+    --textSecondary: #666;
+    --primaryColor: #fd4;
+
+}
+
+main{
+    width: 1050px;
+    margin: 50px auto
+}
+
+body{
+    font-family: "Courier Prime", monospace;
+    background-color: var(--bgColor);
+    color: var(--textPrimary);
+    font-size: 1.4rem;
+}   
+h1{
+    color: var(--primaryColor);
+    img{
+        width: 40px;
+        filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(200deg); 
+}
+}
+
+#header{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin:20px 6px 30px
+}
+
+#buttons{
+    text-align:right;
+}
+
+#info{
+    color: var(--primaryColor);
+}
+button{
+    background: rgba(255, 255, 255,.2);
+    color: rgba(255, 255, 255, .5);
+    border: 0;
+    padding: 5px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+div#game{
+    line-height: 35px;
+    height: 105px;
+    overflow: hidden;
+}
+
+#game {
+    position: relative; /* To position the focus-error inside it */
+    border: none;
+}
+
+#focus-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primaryColor);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1;
+    transition: color 3s ease; /* Smooth transition for color change */
+}
+
+#focus-error:hover {
+    color: var(--bgColor);
+}
+
+
+
+#words{
+    filter: blur(5px);
+    color: var(--textSecondary);
+    font-family: 'Courier New', Courier, monospace;
+    transition: filter 0.3s ease;
+}
+
+#game:focus #words{
+    filter:blur(0);
+    transition: filter 0.3s ease;
+}
+
+#game:focus #focus-error{
+    display:none;
+}
+
+div.word{
+    display: inline-block;
+    margin: 0 12px;
+    
+}
+
+#letter.correct{
+    color:#fff;
+}
+
+#letter.incorrect{
+    color:#f55
+}
+
+#cursor {
+    display: none;
+    width: 2px;
+    height: 1.3rem;
+    background-color: var(--primaryColor);
+    position: fixed;
+    top: 248px; /* Adjust as needed */
+    left: 18px; /* Adjust as needed */
+    animation: blink 1s step-end infinite; /* Use step-end for abrupt blinking */
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1; /* Fully visible */
+    }
+    50% {
+        opacity: 0; /* Fully transparent */
+    }
+}
+
+#game:focus #cursor{
+    display: block;
+}
+
